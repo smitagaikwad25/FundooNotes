@@ -90,7 +90,6 @@ exports.userLogin = (req, res) => {
                 emailID: req.body.emailID,
             }
             USER_SERVICE.userLogin(loginData, (err, data) => {
-                console.log("userloging in contoller ---->", req.body);
                 if (err) {
                     response.success = false;
                     response.message = 'no user exit with this email id';

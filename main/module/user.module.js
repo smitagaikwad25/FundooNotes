@@ -42,7 +42,7 @@ exports.registerUser = (UserData, callback) => {
 };
 
 exports.isEmailIDPresent = (emailID, callback) => {
-    
+
     SCHEMA_USER_DETAIL.findOne({ "emailID": emailID.emailID }, (err, data) => {
 
         if (err) {
@@ -54,8 +54,6 @@ exports.isEmailIDPresent = (emailID, callback) => {
 };
 
 exports.userLogin = (data, callback) => {
-
-    console.log("userloging data at module", data);
 
     SCHEMA_USER_DETAIL.findOne(data)
         .then(data => {
