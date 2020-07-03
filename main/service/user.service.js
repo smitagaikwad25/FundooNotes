@@ -28,3 +28,12 @@ exports.userLogin = (data, callback) => {
         return callback(null, data);
     })
 };
+
+exports.userUpdate = (req, callback) => {
+    USER_LOGIN_MODULE.userUpdate(req, (err, data) => {
+        if (err) {
+            return callback(err);
+        }
+        return callback(null, data);
+    })
+}

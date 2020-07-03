@@ -1,4 +1,5 @@
 const MONGOOSE = require("mongoose");
+MONGOOSE.set('useFindAndModify', false);
 
 const USERSCHEMA = MONGOOSE.Schema(
     {
@@ -63,4 +64,21 @@ exports.userLogin = (data, callback) => {
             callback({ message: "Invalid email id" })
         });
 
+};
+
+exports.userUpdate = (req, callback) => {
+
+    const id = req.params.id
+    const updates = req.body
+
+    SCHEMA_USER_DETAIL.findByIdAndUpdate(id, updates, { new: true })
+        .then(data => {
+            if (!data) {
+                callback({ message: "no data found with this id" })
+            }
+            callback(null, data);
+        })
+        .catch(err => {
+            callback({ message: "Invalid email id" })
+        });
 }

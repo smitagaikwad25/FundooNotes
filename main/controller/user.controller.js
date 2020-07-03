@@ -116,3 +116,26 @@ exports.userLogin = (req, res) => {
         res.status(500).send({ message: "Internal erro occure" });
     }
 }
+
+exports.userUpdate = (req, res) => {
+    try {
+        const response = {};
+        USER_SERVICE.userUpdate(req, (err, data) => {
+            if (err) {
+                response.success = false;
+                response.message = 'erro occurre while updating';
+                response.err = err;
+                return res.status(500).send(response);
+            } else {
+                response.data = data
+                response.success = true;
+                response.message = 'user information update successfully done'
+                return res.status(200).send(response)
+            }
+        })
+    } catch (err) {
+        console.log(err);
+        res.status(500).send({ message: "Internal erro occure" });
+    }
+
+}
