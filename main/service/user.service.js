@@ -11,7 +11,7 @@ exports.registerUser = (data, callback) => {
 
 };
 
-exports.isUserPresent = (data, callback) => {
+exports.isEmailPresent = (data, callback) => {
     USER_LOGIN_MODULE.isEmailIDPresent(data, (err, data) => {
         if (err) {
             return callback(err);
@@ -37,4 +37,14 @@ exports.userUpdate = (req, callback) => {
         return callback(null, data);
     })
 };
+
+exports.deleteUser = (req, callback) => {
+
+    USER_LOGIN_MODULE.deleteUser(req, (err, data) => {
+        if (err) {
+            return callback(err);
+        }
+        return callback(null, data);
+    })
+}
 

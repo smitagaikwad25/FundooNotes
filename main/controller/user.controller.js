@@ -148,3 +148,30 @@ exports.userUpdate = (req, res) => {
 
 };
 
+exports.deleteUser = (req, res) => {
+    try {
+        const response = {};
+
+        USER_SERVICE.deleteUser(req, (err, data) => {
+
+            console.log("err @ contoller while deleting-->", err);
+            console.log("data @ contoller while deleting-->", data);
+
+            if (err) {
+                response.success = false;
+                response.message = 'erro occurre while delete';
+                response.err = err;
+                return res.status(500).send(response);
+            } else {
+                response.data = data
+                response.success = true;
+                response.message = 'successfully deleted user'
+                return res.status(200).send(response)
+            }
+        })
+    } catch (err) {
+        console.log(err);
+        res.status(500).send({ message: "Internal erro occure" });
+    }
+
+}

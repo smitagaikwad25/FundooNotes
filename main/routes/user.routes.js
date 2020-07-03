@@ -4,6 +4,6 @@ module.exports = app => {
     app.post("/register/user", USER_CONTROLLER.userRegister)
     app.get("/user/loging", USER_CONTROLLER.userLogin)
     app.put("/user/update/:emailID", USER_CONTROLLER.userUpdate)
-    
+    app.delete("/user/delete/:emailID", USER_CONTROLLER.deleteUser)
 
 }

@@ -68,7 +68,7 @@ exports.userLogin = (data, callback) => {
 
 exports.userUpdate = (req, callback) => {
 
-    const emailID= req.params.emailID
+    const emailID = req.params.emailID
     const updates = req.body
 
     SCHEMA_USER_DETAIL.findByIdAndUpdate(emailID, updates, { new: true })
@@ -82,6 +82,27 @@ exports.userUpdate = (req, callback) => {
             callback({ message: "Invalid email id" })
         });
 };
+
+exports.deleteUser = (req, callback) => {
+
+    const emailID= req.params.emailID
+
+    console.log(" while deleting user---> ", emailID);
+
+    SCHEMA_USER_DETAIL.findByIdAndRemove(emailID)
+        .then(data => {
+            console.log("data @ module while deleting--->", data);
+            if (!data) {
+                callback(null, { message: "no data found with this email id" })
+            } else {
+                callback(null, { message: "user was deleted successfully" });
+            }
+        })
+        .catch(err => {
+            callback({ message: "error occure" })
+        });
+
+}
 
 
 
