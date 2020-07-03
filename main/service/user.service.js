@@ -21,9 +21,6 @@ exports.isEmailPresent = (data, callback) => {
 };
 
 exports.userLogin = (data, callback) => {
-
-    console.log("userloging data at service --->", data);
-
     USER_LOGIN_MODULE.userLogin(data, (err, data) => {
         if (err) {
             return callback(err);
