@@ -1,4 +1,5 @@
 const USER_SERVICE = require("../service/user.service")
+const bcrypt = require('bcrypt');
 
 exports.userRegister = (req, res) => {
 
@@ -23,7 +24,7 @@ exports.userRegister = (req, res) => {
                 firstName: req.body.firstName,
                 lastName: req.body.lastName,
                 emailID: req.body.emailID,
-                password: req.body.password
+                password: bcrypt.hashSync(req.body.password, 10),
             };
 
             USER_SERVICE.registerUser(userDetails, (err, data) => {
