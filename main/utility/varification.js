@@ -6,3 +6,14 @@ exports.generateToken = (payload) => {
     }
     return TokenObject
 };
+
+exports.isPasswordCorrect = (password, data, callback) => {
+    bcrypt.compare(password, data.password, (err, res) => {
+        if (!res) {
+            return callback({ message: "Incorrect Password" })
+        } else {
+            return callback(null, "Loging successfully done")
+        }
+    });
+};
+

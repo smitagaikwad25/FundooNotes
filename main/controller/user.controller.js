@@ -95,12 +95,20 @@ exports.userLogin = (req, res) => {
                     response.message = 'no user exit with this email id';
                     response.err = err;
                     return res.status(500).send(response);
-                } else {
-                    response.data = data;
-                    response.success = true;
-                    response.message = "user login successfull done";
-                    return res.status(200).send(response);
                 }
+                VERIFY.isPasswordCorrect(req.body.password, data, (err, data) => {
+                    if (err) {
+                        response.success = false;
+                        response.message = "Invalid password";
+                        response.err = err;
+                        return res.status(500).send(response);
+                    } else {
+                        response.data = data;
+                        response.success = true;
+                        response.message = "user login successfull done";
+                        return res.status(200).send(response);
+                    }
+                })
             });
         }
     } catch (err) {
