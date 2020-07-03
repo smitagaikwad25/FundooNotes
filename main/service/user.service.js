@@ -46,5 +46,17 @@ exports.deleteUser = (req, callback) => {
         }
         return callback(null, data);
     })
+};
+
+exports.searchUser = (req, callback) => {
+
+    USER_LOGIN_MODULE.searchUser(req, (err, data) => {
+        if (err) {
+            return callback(err);
+        }
+        return callback(null, data);
+    })
 }
+
+
 

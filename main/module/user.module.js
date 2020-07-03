@@ -100,5 +100,24 @@ exports.deleteUser = (req, callback) => {
 
 }
 
+exports.searchUser = (req, callback) => {
+
+    const emailID = req.params.emailID
+    SCHEMA_USER_DETAIL.find(emailID)
+        .then(data => {
+            if (!data) {
+                callback(null, { message: "no data found with this email id" })
+            } else {
+                callback(null, { message: "user was deleted successfully" });
+            }
+        })
+        .catch(err => {
+            callback({ message: "error occure" })
+        });
+
+}
+
+
+
 
 
