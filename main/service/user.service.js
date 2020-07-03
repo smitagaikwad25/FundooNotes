@@ -19,3 +19,15 @@ exports.isEmailPresent = (data, callback) => {
         return callback(null, data);
     })
 };
+
+exports.userLogin = (data, callback) => {
+
+    console.log("userloging data at service --->", data);
+
+    USER_LOGIN_MODULE.userLogin(data, (err, data) => {
+        if (err) {
+            return callback(err);
+        }
+        return callback(null, data);
+    })
+};

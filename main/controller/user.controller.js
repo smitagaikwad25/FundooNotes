@@ -24,8 +24,8 @@ exports.userRegister = (req, res) => {
                     .exists()
                     .isEmail();
                 req.checkBody("password")
-                    .matches(/^(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9])(?=.*[#$^+=!*()@%&]).{8,}$/)
-                    .withMessage('must be at least 8 chars long and must and min one lower and uper case chars aslo only one special chars ')
+                    // .matches(/^(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9])(?=.*[#$^+=!*()@%&]).{8,}$/)
+                    // .withMessage('must be at least 8 chars long and must and min one lower and uper case chars aslo only one special chars ')
                     .exists();
 
                 const error = req.validationErrors();
@@ -65,6 +65,45 @@ exports.userRegister = (req, res) => {
             }
         })
 
+    } catch (err) {
+        console.log(err);
+        res.status(500).send({ message: "Internal erro occure" });
+    }
+}
+
+exports.userLogin = (req, res) => {
+    try {
+        req.checkBody("emailID")
+            .exists()
+            .isEmail();
+        req.checkBody("password")
+            .exists();
+        const error = req.validationErrors();
+        const response = {};
+        if (error) {
+            response.success = false;
+            response.message = 'enter valid details';
+            response.error = error;
+            return res.status(500).send(response);
+        } else {
+            loginData = {
+                emailID: req.body.emailID,
+            }
+            USER_SERVICE.userLogin(loginData, (err, data) => {
+                console.log("userloging in contoller ---->", req.body);
+                if (err) {
+                    response.success = false;
+                    response.message = 'no user exit with this email id';
+                    response.err = err;
+                    return res.status(500).send(response);
+                } else {
+                    response.data = data;
+                    response.success = true;
+                    response.message = "user login successfull done";
+                    return res.status(200).send(response);
+                }
+            });
+        }
     } catch (err) {
         console.log(err);
         res.status(500).send({ message: "Internal erro occure" });

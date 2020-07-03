@@ -52,3 +52,17 @@ exports.isEmailIDPresent = (emailID, callback) => {
         }
     })
 };
+
+exports.userLogin = (data, callback) => {
+
+    console.log("userloging data at module", data);
+
+    SCHEMA_USER_DETAIL.findOne(data)
+        .then(data => {
+            callback(null, data);
+        })
+        .catch(err => {
+            callback({ message: "Invalid email id" })
+        });
+
+}
