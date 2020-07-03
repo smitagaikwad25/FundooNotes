@@ -1,6 +1,8 @@
 const USER_SERVICE = require("../service/user.service")
 const bcrypt = require('bcrypt');
 
+const VERIFY = require("../utility/varification")
+
 exports.userRegister = (req, res) => {
 
     try {
@@ -42,6 +44,13 @@ exports.userRegister = (req, res) => {
                     response.err = err;
                     return res.status(500).send(response);
                 } else {
+                    let payload =
+                    {
+                        "emailID": data.emailID,
+                        "_id": data._id
+                    }
+                    let Token = VERIFY.generateToken(payload)
+                    console.log("jwttokent--->", Token);
                     response.data = data;
                     response.success = true;
                     response.message = "user registertion successfull done";
