@@ -36,4 +36,5 @@ exports.userUpdate = (req, callback) => {
         }
         return callback(null, data);
     })
-}
+};
+

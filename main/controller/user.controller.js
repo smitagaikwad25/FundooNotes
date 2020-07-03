@@ -146,4 +146,5 @@ exports.userUpdate = (req, res) => {
         res.status(500).send({ message: "Internal erro occure" });
     }
 
-}
+};
+

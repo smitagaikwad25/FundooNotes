@@ -68,10 +68,10 @@ exports.userLogin = (data, callback) => {
 
 exports.userUpdate = (req, callback) => {
 
-    const id = req.params.id
+    const emailID= req.params.emailID
     const updates = req.body
 
-    SCHEMA_USER_DETAIL.findByIdAndUpdate(id, updates, { new: true })
+    SCHEMA_USER_DETAIL.findByIdAndUpdate(emailID, updates, { new: true })
         .then(data => {
             if (!data) {
                 callback({ message: "no data found with this id" })
@@ -81,4 +81,7 @@ exports.userUpdate = (req, callback) => {
         .catch(err => {
             callback({ message: "Invalid email id" })
         });
-}
+};
+
+
+
