@@ -10,3 +10,12 @@ exports.registerUser = (data, callback) => {
     });
 
 };
+
+exports.isEmailPresent = (data, callback) => {
+    USER_LOGIN_MODULE.isEmailIDPresent(data, (err, data) => {
+        if (err) {
+            return callback(err);
+        }
+        return callback(null, data);
+    })
+};
