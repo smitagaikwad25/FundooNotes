@@ -6,7 +6,7 @@ const VERIFY = require("../utility/varification")
 exports.userRegister = (req, res) => {
     try {
         var response = {};
-        USER_SERVICE.isUserPresent({ emailID: req.body.emailID }, (err, data) => {
+        USER_SERVICE.isPresent({ emailID: req.body.emailID }, (err, data) => {
             if (data) {
                 response.success = false;
                 response.message = "user with this mail id already present";
@@ -63,8 +63,7 @@ exports.userRegister = (req, res) => {
                     })
                 }
             }
-        })
-
+        });
     } catch (err) {
         console.log(err);
         res.status(500).send({ message: "Internal erro occure" });
@@ -182,7 +181,7 @@ exports.deleteUser = (req, res) => {
 exports.searchUser = (req, res) => {
     try {
         const response = {};
-        USER_SERVICE.isUserPresent({ emailID: req.body.emailID}, (err, data) => {
+        USER_SERVICE.isUserPresent({ emailID: req.body.emailID }, (err, data) => {
             if (!data) {
                 response.success = false;
                 response.message = "user doesn't exist";

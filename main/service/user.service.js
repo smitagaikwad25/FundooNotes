@@ -11,8 +11,8 @@ exports.registerUser = (data, callback) => {
 
 };
 
-exports.isEmailPresent = (data, callback) => {
-    USER_LOGIN_MODULE.isEmailIDPresent(data, (err, data) => {
+exports.isPresent = (data, callback) => {
+    USER_LOGIN_MODULE.isPresent(data, (err, data) => {
         if (err) {
             return callback(err);
         }

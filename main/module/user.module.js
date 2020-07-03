@@ -23,7 +23,7 @@ const USERSCHEMA = MONGOOSE.Schema(
     { timestamps: true }
 );
 
-var SCHEMA_USER_DETAIL = MONGOOSE.model("userDetails", USERSCHEMA);
+var SCHEMA_USER_DETAIL = MONGOOSE.model("userDatabase", USERSCHEMA);
 
 exports.registerUser = (UserData, callback) => {
 
@@ -42,7 +42,7 @@ exports.registerUser = (UserData, callback) => {
         })
 };
 
-exports.isUserPresent = (emailID, callback) => {
+exports.isPresent = (emailID, callback) => {
 
     SCHEMA_USER_DETAIL.findOne({ "emailID": emailID.emailID }, (err, data) => {
 
