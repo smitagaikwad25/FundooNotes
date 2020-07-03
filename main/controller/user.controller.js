@@ -151,12 +151,7 @@ exports.userUpdate = (req, res) => {
 exports.deleteUser = (req, res) => {
     try {
         const response = {};
-
         USER_SERVICE.deleteUser(req, (err, data) => {
-
-            console.log("err @ contoller while deleting-->", err);
-            console.log("data @ contoller while deleting-->", data);
-
             if (err) {
                 response.success = false;
                 response.message = 'erro occurre while delete';

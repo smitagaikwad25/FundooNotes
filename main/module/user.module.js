@@ -85,13 +85,9 @@ exports.userUpdate = (req, callback) => {
 
 exports.deleteUser = (req, callback) => {
 
-    const emailID= req.params.emailID
-
-    console.log(" while deleting user---> ", emailID);
-
+    const emailID = req.params.emailID
     SCHEMA_USER_DETAIL.findByIdAndRemove(emailID)
         .then(data => {
-            console.log("data @ module while deleting--->", data);
             if (!data) {
                 callback(null, { message: "no data found with this email id" })
             } else {
