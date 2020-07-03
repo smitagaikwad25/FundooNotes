@@ -3,5 +3,5 @@ module.exports = app => {
 
     app.post("/register/user", USER_CONTROLLER.userRegister)
     app.get("/user/loging", USER_CONTROLLER.userLogin)
-    app.put("/user/update/:id", USER_CONTROLLER.userUpdate)
+    app.put("/user/update/:emailID", USER_CONTROLLER.userUpdate)
 }
