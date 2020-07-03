@@ -42,7 +42,7 @@ exports.registerUser = (UserData, callback) => {
         })
 };
 
-exports.isEmailIDPresent = (emailID, callback) => {
+exports.isUserPresent = (emailID, callback) => {
 
     SCHEMA_USER_DETAIL.findOne({ "emailID": emailID.emailID }, (err, data) => {
 

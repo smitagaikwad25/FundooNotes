@@ -6,7 +6,7 @@ const VERIFY = require("../utility/varification")
 exports.userRegister = (req, res) => {
     try {
         var response = {};
-        USER_SERVICE.isEmailPresent({ emailID: req.body.emailID }, (err, data) => {
+        USER_SERVICE.isUserPresent({ emailID: req.body.emailID }, (err, data) => {
             if (data) {
                 response.success = false;
                 response.message = "user with this mail id already present";
