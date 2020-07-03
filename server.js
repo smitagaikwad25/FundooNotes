@@ -3,6 +3,7 @@ const express = require("express");
 const mongoose = require("mongoose");
 
 const bodyParser = require("body-parser");
+
 const app = express();
 
 const expressValidator = require("express-validator");
@@ -29,7 +30,7 @@ mongoose
         process.exit();
     });
 
-require("./src/routes/user.routes")(app);
+require("./main/routes/user.routes")(app);
 
 app.listen(process.env.PORT, () => {
     console.log("Server is listening on port " + process.env.PORT);
