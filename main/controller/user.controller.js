@@ -25,7 +25,7 @@ exports.userRegister = (req, res) => {
                     .isEmail();
                 req.checkBody("password")
                     .matches(/^(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9])(?=.*[#$^+=!*()@%&]).{8,}$/)
-                    .withMessage('must be at least 8 chars long and must and min one lower and uper case chars aslo only one special chars ')
+                    .withMessage('password must conatin min 8 chars with min one upper one lower case chars and with exact one special chars  ')
                     .exists();
 
 
@@ -85,7 +85,7 @@ exports.userLogin = (req, res) => {
             .isEmail();
         req.checkBody("password")
             .matches(/^(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9])(?=.*[#$^+=!*()@%&]).{8,}$/)
-            .withMessage('must be at least 8 chars long and must and min one lower and uper case chars aslo only one special chars ')
+            .withMessage('password must conatin min 8 chars with min one upper one lower case chars and with exact one special chars  ')
 
         const error = req.validationErrors();
         const response = {};
