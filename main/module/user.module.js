@@ -101,19 +101,17 @@ exports.deleteUser = (req, callback) => {
 
 }
 
-exports.searchUser = (req, callback) => {
+exports.searchUser = (userData, callback) => {
 
-    const emailID = req.params.emailID
-    SCHEMA_USER_DETAIL.find(emailID)
-        .then(data => {
-            if (!data) {
-                callback(null, { message: "no data found with this email id" })
+    SCHEMA_USER_DETAIL.find(
+        { emailID: { $regex: userData.emailID, $options: "i" } },
+        (err, data) => {
+            if (err) {
+                return callback(err, null);
             } else {
-                callback(null, { message: "user was deleted successfully" });
+                return callback(null, data);
             }
-        })
-        .catch(err => {
-            callback({ message: "error occure" })
-        });
+        }
+    );
 
 }

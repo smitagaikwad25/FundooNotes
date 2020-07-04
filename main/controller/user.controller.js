@@ -193,30 +193,36 @@ exports.deleteUser = (req, res) => {
 
 }
 
-exports.searchUser = (req, res) => {
+exports.searchUser = async (req, res) => {
     try {
         const response = {};
-        USER_SERVICE.isPresent({ emailID: req.body.emailID }, (err, data) => {
-            if (!data) {
-                response.success = false;
-                response.message = "user doesn't exist";
-                return res.status(500).send(response);
-            } else {
-                USER_SERVICE.searchUser(req, (err, data) => {
-                    if (err) {
-                        response.success = false;
-                        response.message = 'erro occurre while serching ';
-                        response.err = err;
-                        return res.status(500).send(response);
-                    } else {
-                        response.data = data
-                        response.success = true;
-                        response.message = 'successfully searching is done'
-                        return res.status(200).send(response)
-                    }
-                })
-            }
-        });
+        req.checkBody("emailID")
+            .exists()
+            .isEmail();
+        const error = req.validationErrors();
+        if (error) {
+            response.success = false;
+            response.message = "enter valid details";
+            response.error = error;
+            return res.status(500).send(response);
+        } else {
+            userData = {
+                emailID: await req.body.emailID
+            };
+            USER_SERVICE.searchUser(userData, (err, data) => {
+                if (err) {
+                    response.success = false;
+                    response.message = 'erro occurre while serching ';
+                    response.err = err;
+                    return res.status(500).send(response);
+                } else {
+                    response.data = data
+                    response.success = true;
+                    response.message = 'successfully searching is done'
+                    return res.status(200).send(response)
+                }
+            });
+        }
     } catch (err) {
         console.log(err);
         res.status(500).send({ message: "Internal erro occure" });

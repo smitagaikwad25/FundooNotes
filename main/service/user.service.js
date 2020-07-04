@@ -58,7 +58,7 @@ exports.searchUser = (req, callback) => {
 
     USER_LOGIN_MODULE.searchUser(req, (err, data) => {
         if (err) {
-            return callback(err);
+            return callback(err,null);
         }
         return callback(null, data);
     })
