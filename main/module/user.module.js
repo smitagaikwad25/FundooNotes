@@ -1,7 +1,7 @@
 const MONGOOSE = require("mongoose");
 MONGOOSE.set('useFindAndModify', false);
 
-const USERSCHEMA = MONGOOSE.Schema(
+const USER_SCHEMA = MONGOOSE.Schema(
     {
         firstName: {
             type: String,
@@ -23,7 +23,7 @@ const USERSCHEMA = MONGOOSE.Schema(
     { timestamps: true }
 );
 
-var SCHEMA_USER_DETAIL = MONGOOSE.model("userDatabase", USERSCHEMA);
+var SCHEMA_USER_DETAIL = MONGOOSE.model("registerData", USER_SCHEMA);
 
 exports.registerUser = (UserData, callback) => {
 
@@ -35,9 +35,11 @@ exports.registerUser = (UserData, callback) => {
 
     USERDATA.save()
         .then(data => {
+            console.log("register user at service", data);
             callback(null, data);
         })
         .catch(err => {
+            console.log("resting user @err-->", err);
             callback({ message: "Error While Storing User Details in DataBase" }, null);
         })
 };

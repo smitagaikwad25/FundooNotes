@@ -12,6 +12,8 @@ exports.userRegister = (req, res) => {
                 response.message = "user with this mail id already present";
                 return res.status(500).send(response);
             } else {
+                console.log("req in the controller", req.body);
+
                 req.checkBody("firstName")
                     .isAlpha().withMessage('first name is not in proper formate')
                     .isLength({ min: 4 }).withMessage('first name should have min 4 characters')
@@ -29,19 +31,28 @@ exports.userRegister = (req, res) => {
                     .exists();
 
                 const error = req.validationErrors();
+
+                console.log("error at controller", error);
+
                 if (error) {
                     response.success = false;
                     response.message = "enter valid details";
                     response.error = error;
                     return res.status(500).send(response);
                 } else {
+
                     userDetails = {
                         firstName: req.body.firstName,
                         lastName: req.body.lastName,
                         emailID: req.body.emailID,
                         password: bcrypt.hashSync(req.body.password, 10),
                     };
+
                     USER_SERVICE.registerUser(userDetails, (err, data) => {
+
+                        console.log("at controll while registing @err-->", err);
+                        console.log("at controll while registing @data-->", data);
+
                         if (err) {
                             response.success = false;
                             response.message = "There was a problem registering the user";
@@ -60,15 +71,19 @@ exports.userRegister = (req, res) => {
                             response.message = "user registertion successfull done";
                             return res.status(200).send(response);
                         }
-                    })
+                    });
                 }
+
             }
-        });
+
+        })
+
     } catch (err) {
         console.log(err);
         res.status(500).send({ message: "Internal erro occure" });
     }
-}
+};
+
 
 exports.userLogin = (req, res) => {
     try {
@@ -119,7 +134,7 @@ exports.userLogin = (req, res) => {
 exports.userUpdate = (req, res) => {
     try {
         const response = {};
-        USER_SERVICE.isUserPresent({ emailID: req.body.emailID }, (err, data) => {
+        USER_SERVICE.isPresent({ emailID: req.body.emailID }, (err, data) => {
             if (!data) {
                 response.success = false;
                 response.message = "user with this mail id doesn't exist";
@@ -150,7 +165,7 @@ exports.userUpdate = (req, res) => {
 exports.deleteUser = (req, res) => {
     try {
         const response = {};
-        USER_SERVICE.isUserPresent({ emailID: req.body.emailID }, (err, data) => {
+        USER_SERVICE.isPresent({ emailID: req.body.emailID }, (err, data) => {
             if (!data) {
                 response.success = false;
                 response.message = "user with this mail id doesn't exist";
@@ -181,7 +196,7 @@ exports.deleteUser = (req, res) => {
 exports.searchUser = (req, res) => {
     try {
         const response = {};
-        USER_SERVICE.isUserPresent({ emailID: req.body.emailID }, (err, data) => {
+        USER_SERVICE.isPresent({ emailID: req.body.emailID }, (err, data) => {
             if (!data) {
                 response.success = false;
                 response.message = "user doesn't exist";
