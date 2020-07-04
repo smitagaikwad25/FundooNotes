@@ -1,7 +1,7 @@
 const MONGOOSE = require("mongoose");
 MONGOOSE.set('useFindAndModify', false);
 
-const USER_SCHEMA = MONGOOSE.Schema(
+const USERSCHEMA = MONGOOSE.Schema(
     {
         firstName: {
             type: String,
@@ -23,7 +23,7 @@ const USER_SCHEMA = MONGOOSE.Schema(
     { timestamps: true }
 );
 
-var SCHEMA_USER_DETAIL = MONGOOSE.model("registerData", USER_SCHEMA);
+var SCHEMA_USER_DETAIL = MONGOOSE.model("registerdatas", USERSCHEMA);
 
 exports.registerUser = (UserData, callback) => {
 
@@ -35,11 +35,9 @@ exports.registerUser = (UserData, callback) => {
 
     USERDATA.save()
         .then(data => {
-            console.log("register user at service", data);
             callback(null, data);
         })
         .catch(err => {
-            console.log("resting user @err-->", err);
             callback({ message: "Error While Storing User Details in DataBase" }, null);
         })
 };
@@ -66,7 +64,7 @@ exports.userLogin = (data, callback) => {
             callback({ message: "Invalid email id" })
         });
 
-};
+}
 
 exports.userUpdate = (req, callback) => {
 
@@ -83,15 +81,16 @@ exports.userUpdate = (req, callback) => {
         .catch(err => {
             callback({ message: "Invalid email id" })
         });
-};
+}
 
 exports.deleteUser = (req, callback) => {
 
     const emailID = req.params.emailID
+
     SCHEMA_USER_DETAIL.findByIdAndRemove(emailID)
         .then(data => {
             if (!data) {
-                callback(null, { message: "no data found with this email id" })
+                callback(null, { message: "no data found with this id" })
             } else {
                 callback(null, { message: "user was deleted successfully" });
             }
@@ -118,8 +117,3 @@ exports.searchUser = (req, callback) => {
         });
 
 }
-
-
-
-
-

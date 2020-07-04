@@ -1,7 +1,7 @@
 const USER_SERVICE = require("../service/user.service")
-const bcrypt = require('bcrypt');
+const VERIFY = require("../utility/verification")
 
-const VERIFY = require("../utility/varification")
+const bcrypt = require('bcrypt');
 
 exports.userRegister = (req, res) => {
     try {
@@ -12,8 +12,6 @@ exports.userRegister = (req, res) => {
                 response.message = "user with this mail id already present";
                 return res.status(500).send(response);
             } else {
-                console.log("req in the controller", req.body);
-
                 req.checkBody("firstName")
                     .isAlpha().withMessage('first name is not in proper formate')
                     .isLength({ min: 4 }).withMessage('first name should have min 4 characters')
@@ -30,9 +28,8 @@ exports.userRegister = (req, res) => {
                     // .withMessage('must be at least 8 chars long and must and min one lower and uper case chars aslo only one special chars ')
                     .exists();
 
-                const error = req.validationErrors();
 
-                console.log("error at controller", error);
+                const error = req.validationErrors();
 
                 if (error) {
                     response.success = false;
@@ -49,10 +46,6 @@ exports.userRegister = (req, res) => {
                     };
 
                     USER_SERVICE.registerUser(userDetails, (err, data) => {
-
-                        console.log("at controll while registing @err-->", err);
-                        console.log("at controll while registing @data-->", data);
-
                         if (err) {
                             response.success = false;
                             response.message = "There was a problem registering the user";
@@ -84,16 +77,18 @@ exports.userRegister = (req, res) => {
     }
 };
 
-
 exports.userLogin = (req, res) => {
+
     try {
         req.checkBody("emailID")
             .exists()
             .isEmail();
         req.checkBody("password")
             .exists();
+
         const error = req.validationErrors();
         const response = {};
+
         if (error) {
             response.success = false;
             response.message = 'enter valid details';
@@ -110,6 +105,7 @@ exports.userLogin = (req, res) => {
                     response.err = err;
                     return res.status(500).send(response);
                 }
+
                 VERIFY.isPasswordCorrect(req.body.password, data, (err, data) => {
                     if (err) {
                         response.success = false;
@@ -122,13 +118,17 @@ exports.userLogin = (req, res) => {
                         response.message = "user login successfull done";
                         return res.status(200).send(response);
                     }
+
                 })
+
             });
         }
+
     } catch (err) {
         console.log(err);
         res.status(500).send({ message: "Internal erro occure" });
     }
+
 }
 
 exports.userUpdate = (req, res) => {
@@ -137,7 +137,7 @@ exports.userUpdate = (req, res) => {
         USER_SERVICE.isPresent({ emailID: req.body.emailID }, (err, data) => {
             if (!data) {
                 response.success = false;
-                response.message = "user with this mail id doesn't exist";
+                response.message = "user doesn't exist";
                 return res.status(500).send(response);
             } else {
                 USER_SERVICE.userUpdate(req, (err, data) => {
@@ -154,13 +154,12 @@ exports.userUpdate = (req, res) => {
                     }
                 })
             }
-        })
+        });
     } catch (err) {
         console.log(err);
         res.status(500).send({ message: "Internal erro occure" });
     }
-
-};
+}
 
 exports.deleteUser = (req, res) => {
     try {
@@ -168,7 +167,7 @@ exports.deleteUser = (req, res) => {
         USER_SERVICE.isPresent({ emailID: req.body.emailID }, (err, data) => {
             if (!data) {
                 response.success = false;
-                response.message = "user with this mail id doesn't exist";
+                response.message = "user doesn't exist";
                 return res.status(500).send(response);
             } else {
                 USER_SERVICE.deleteUser(req, (err, data) => {
@@ -191,7 +190,7 @@ exports.deleteUser = (req, res) => {
         res.status(500).send({ message: "Internal erro occure" });
     }
 
-};
+}
 
 exports.searchUser = (req, res) => {
     try {
@@ -221,4 +220,5 @@ exports.searchUser = (req, res) => {
         console.log(err);
         res.status(500).send({ message: "Internal erro occure" });
     }
+
 }

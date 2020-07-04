@@ -21,6 +21,9 @@ exports.isPresent = (data, callback) => {
 };
 
 exports.userLogin = (data, callback) => {
+
+    console.log("userloging data at service --->", data);
+
     USER_LOGIN_MODULE.userLogin(data, (err, data) => {
         if (err) {
             return callback(err);
@@ -30,13 +33,16 @@ exports.userLogin = (data, callback) => {
 };
 
 exports.userUpdate = (req, callback) => {
+
+    console.log("user update data at service --->", req.body);
+
     USER_LOGIN_MODULE.userUpdate(req, (err, data) => {
         if (err) {
             return callback(err);
         }
         return callback(null, data);
     })
-};
+}
 
 exports.deleteUser = (req, callback) => {
 
@@ -46,7 +52,7 @@ exports.deleteUser = (req, callback) => {
         }
         return callback(null, data);
     })
-};
+}
 
 exports.searchUser = (req, callback) => {
 
@@ -57,6 +63,3 @@ exports.searchUser = (req, callback) => {
         return callback(null, data);
     })
 }
-
-
-

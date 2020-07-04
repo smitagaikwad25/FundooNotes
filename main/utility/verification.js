@@ -1,3 +1,6 @@
+var bcrypt = require('bcrypt');
+var jwt = require('jsonwebtoken');
+
 exports.generateToken = (payload) => {
     var token = jwt.sign({ payload }, 'privatekey');
     let TokenObject = {
@@ -17,3 +20,10 @@ exports.isPasswordCorrect = (password, data, callback) => {
     });
 };
 
+
+
+
+                
+
+
+              

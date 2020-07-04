@@ -7,5 +7,4 @@ module.exports = app => {
     app.delete("/user/delete/:emailID", USER_CONTROLLER.deleteUser)
     app.get("/user/search/:emailID", USER_CONTROLLER.searchUser)
 
-
 }
